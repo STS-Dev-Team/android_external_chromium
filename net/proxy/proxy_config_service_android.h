@@ -29,6 +29,7 @@ class NET_EXPORT ProxyConfigServiceAndroid : public ProxyConfigService {
 private:
   ObserverList<Observer> observers_;
   std::string m_proxy;
+  std::string m_bypass; // Motorola, qghc36, 04/11/2012, IKHSS6UPGR-6970 / bypass rules update
 };
 
 } // namespace net

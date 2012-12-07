@@ -711,6 +711,11 @@ int HttpCache::Transaction::DoSuccessfulSendRequest() {
 }
 
 int HttpCache::Transaction::DoNetworkRead() {
+  // BEGIN Motorola, grp748, 03/12/2012, IKHSS6-13090
+  if (!network_trans_.get())
+      return ERR_UNEXPECTED;
+  // END IKHSS6-13090
+
   next_state_ = STATE_NETWORK_READ_COMPLETE;
   return network_trans_->Read(read_buf_, io_buf_len_, &io_callback_);
 }
@@ -1850,6 +1855,11 @@ int HttpCache::Transaction::ReadFromNetwork(IOBuffer* data, int data_len) {
 }
 
 int HttpCache::Transaction::ReadFromEntry(IOBuffer* data, int data_len) {
+  // BEGIN Motorola, grp748, 03/12/2012, IKHSS6-13345
+  if (!entry_)
+      return OK;
+  // END IKHSS6-13345
+
   read_buf_ = data;
   io_buf_len_ = data_len;
   next_state_ = STATE_CACHE_READ_DATA;

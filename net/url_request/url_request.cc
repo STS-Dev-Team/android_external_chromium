@@ -363,12 +363,18 @@ void URLRequest::Start() {
 
   // Only notify the delegate for the initial request.
   if (context_ && context_->network_delegate()) {
-    if (context_->network_delegate()->NotifyBeforeURLRequest(
-            this, &before_request_callback_, &delegate_redirect_url_) ==
-            net::ERR_IO_PENDING) {
+    int error = context_->network_delegate()->NotifyBeforeURLRequest(
+        this, &before_request_callback_, &delegate_redirect_url_);
+    // BEGIN Motorola, grp748, 04/16/2012, IKCOREAPP-877
+    if (error == net::ERR_IO_PENDING) {
       net_log_.BeginEvent(NetLog::TYPE_URL_REQUEST_BLOCKED_ON_EXTENSION, NULL);
-      return;  // paused
+      return;
+    } else if (error == net::ERR_NETWORK_ACCESS_DENIED) {
+      BeforeRequestComplete(error);
+      Cancel();
+      return;
     }
+    // END IKCOREAPP-877
   }
 
   StartInternal();

@@ -42,8 +42,11 @@ const size_t kMaxRecvBufferSize = 4096;
 const int kSessionCacheTimeoutSeconds = 60 * 60;
 const size_t kSessionCacheMaxEntires = 1024;
 
+//TODO - Remove this when the porting of feature 37943 to intel is ready
+#ifndef OPENSSL_1_0_1
 // This method doesn't seemed to have made it into the OpenSSL headers.
 unsigned long SSL_CIPHER_get_id(const SSL_CIPHER* cipher) { return cipher->id; }
+#endif
 
 // Used for encoding the |connection_status| field of an SSLInfo object.
 int EncodeSSLConnectionStatus(int cipher_suite,

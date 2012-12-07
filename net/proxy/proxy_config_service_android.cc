@@ -30,10 +30,11 @@ ProxyConfigService::ConfigAvailability ProxyConfigServiceAndroid::GetLatestProxy
 
 void ProxyConfigServiceAndroid::UpdateProxySettings(std::string& proxy,
                                                     std::string& exList) {
-  if (proxy == m_proxy)
+  if (proxy == m_proxy && exList == m_bypass) // Motorola, qghc36, 04/11/2012, IKHSS6UPGR-6970 / bypass rules update
     return;
 
   m_proxy = proxy;
+  m_bypass = exList; // Motorola, qghc36, 04/11/2012, IKHSS6UPGR-6970 / bypass rules update
   ProxyConfig config;
   config.proxy_rules().ParseFromString(m_proxy);
 

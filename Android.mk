@@ -46,6 +46,12 @@ LOCAL_SRC_FILES := \
     app/sql/statement.cc \
     app/sql/transaction.cc \
 
+# BEGIN Motorola, grp748, 04/15/2012, IKCOREAPP-877
+LOCAL_SRC_FILES += \
+    android/chrome_network_delegate.cc \
+    android/black_list_manager.cc
+# END IKCOREAPP-877
+
 ifeq ($(TARGET_ARCH),x86)
 LOCAL_SRC_FILES += \
     base/atomicops_internals_x86_gcc.cc
@@ -209,6 +215,7 @@ LOCAL_SRC_FILES += \
     net/base/x509_certificate_openssl.cc \
     net/base/x509_certificate_openssl_android.cc \
     net/base/x509_openssl_util.cc \
+    net/base/request_priority.cc \
     \
     net/disk_cache/addr.cc \
     net/disk_cache/backend_impl.cc \
